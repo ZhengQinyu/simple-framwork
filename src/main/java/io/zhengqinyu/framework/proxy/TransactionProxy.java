@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import io.zhengqinyu.framework.annotation.Transaction;
 import io.zhengqinyu.framework.helper.DatabaseHelper;
 
-public class TransationProxy implements Proxy {
-	private static final Logger LOGGER = LoggerFactory.getLogger(TransationProxy.class);
+public class TransactionProxy implements Proxy {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionProxy.class);
 
 	private static final ThreadLocal<Boolean> FLAG_HOLDER = new ThreadLocal<Boolean>() {
 		@Override
@@ -20,7 +20,7 @@ public class TransationProxy implements Proxy {
 
 	@Override
 	public Object doProxy(ProxyChain proxyChain) throws Throwable {
-		Object result = null;
+		Object result;
 		boolean flag = FLAG_HOLDER.get();
 		Method method = proxyChain.getTargetMethod();
 		if (!flag && method.isAnnotationPresent(Transaction.class)) {

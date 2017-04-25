@@ -13,7 +13,7 @@ public class ClassUtilTest {
 	@Test
 	public void test() {
 		
-		Set<Class<?>> classes = ClassUtil.getClassSet("javax.servlet");
+		Set<Class<?>> classes = ClassUtil.getClassSet("net.sf.cglib");
 		for (Class<?> class1 : classes) {
 			LOG.debug(class1.getName());
 		}

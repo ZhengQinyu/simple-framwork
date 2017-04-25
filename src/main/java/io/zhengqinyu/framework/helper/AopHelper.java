@@ -16,7 +16,7 @@ import io.zhengqinyu.framework.annotation.Service;
 import io.zhengqinyu.framework.proxy.AspectProxy;
 import io.zhengqinyu.framework.proxy.Proxy;
 import io.zhengqinyu.framework.proxy.ProxyManager;
-import io.zhengqinyu.framework.proxy.TransationProxy;
+import io.zhengqinyu.framework.proxy.TransactionProxy;
 
 public final class AopHelper {
 
@@ -40,7 +40,7 @@ public final class AopHelper {
 	private static Set<Class<?>> createTargetClassSet(Aspect aspect) throws Exception {
 		Set<Class<?>> targetClassSet = new HashSet<Class<?>>();
 		Class<? extends Annotation> annotation = aspect.value();
-		if (annotation != null && !annotation.equals(Aspect.class)) {
+		if (!annotation.equals(Aspect.class)) {
 			targetClassSet.addAll(ClassHelper.getClassSetByAnnotation(annotation));
 		}
 		return targetClassSet;
@@ -49,7 +49,7 @@ public final class AopHelper {
 	private static Map<Class<?>, Set<Class<?>>> createProxyMap() throws Exception {
 		Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
 		addAspectProxy(proxyMap);
-		addTransationProxy(proxyMap);
+		addTransactionProxy(proxyMap);
 		return proxyMap;
 	}
 
@@ -64,9 +64,9 @@ public final class AopHelper {
 		}
 	}
 
-	private static void addTransationProxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception {
+	private static void addTransactionProxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception {
 		Set<Class<?>> serviceClassSet = ClassHelper.getClassSetByAnnotation(Service.class);
-		proxyMap.put(TransationProxy.class, serviceClassSet);
+		proxyMap.put(TransactionProxy.class, serviceClassSet);
 	}
 
 	private static Map<Class<?>, List<Proxy>> createTargetMap(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception {
